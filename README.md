@@ -40,11 +40,11 @@
 
 -   Struktur project `laravel`
 
-    ![folder & file laravel](image.png)
+    ![folder & file laravel](img/image.png)
 
 -   Kita juga bisa menggunakan perintah `php artisan` untuk melihat fitur apa yang bisa digunakan atau dipakai didalam project `laravel`
 
-    ![php artisan](image-1.png)
+    ![php artisan](img/image-1.png)
 
 -   Kita juga bisa menggunakan perintah `php artisan serve --help` untuk melihat detail informasi dari perintah yang ingin dijalankan.
 
