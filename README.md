@@ -774,3 +774,33 @@
             ->assertSeeText('hello response');
     }
     ```
+
+### 25. Encryption
+
+-   Di laravel kita bisa melakukan `encryption` untuk melakuka enkripsi secara otomatis.
+
+-   Dan cara melakukan enkripsi di laravel kita membutuhkan `KEY` yang tersimpan didalam `config/app.php`.
+
+-   kode `KEY` di folder config/app
+
+    ```PHP
+        'key' => env('APP_KEY'),
+    ```
+
+-   key ini bersifat auto generate saat project laravel, dan disarankan untuk merubah `KEY` setiap 1-2 bulan sekali.
+
+-   Gunakan perintah `php artisan key:generate`, maka secara otomatis key akan digenerate.
+
+-   Dan ini adalah contoh app key yang terdapat didalam file `.env`
+
+    ```PHP
+    APP_KEY=base64:8nCcrdqkZL8+uZ5uqhq9WNf65stngHbeJksTF9khXVg=
+    ```
+
+## PERTANYAAN & CATATAN TAMBAHAN
+
+-   tidak ada
+
+## KESIMPULAN
+
+-   tidak ada
