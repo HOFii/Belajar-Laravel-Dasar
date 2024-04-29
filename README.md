@@ -34,6 +34,10 @@
     composer create-project laravel/larave=version nama-folder
     ```
 
+    ![create-project](img/create-laravel.png)
+
+-   Pada sesi kali ini saya menggunakan laravel versi `9.1.5`.
+
 ---
 
 ### 3. Struktur Project
@@ -88,9 +92,9 @@
 
     - `Integration test` menggunakan _class_ turunan dari `Illuminate\Foundation\Testing\TestCase`.
 
-    - Gunakan perintah `php artisan make:test NamaTest`, untuk membuat Integration test dan secara otomatis file akan dibuat oleh `laravel` dan masuk kedalam folder `test/feature`.
+    - Gunakan perintah `php artisan make:test NamaTest`, pada terminal untuk membuat Integration test dan secara otomatis file akan dibuat oleh `laravel` dan masuk kedalam folder `test/feature`.
 
-    - Gunakan perintah `php artisan make:test NamaTest --unit` untuk membuat Unit test dan secara otomatis akan masuk kedalam folder `tests/unit`.
+    - Gunakan perintah `php artisan make:test NamaTest --unit` pada terminal untuk membuat Unit test dan secara otomatis akan masuk kedalam folder `tests/unit`.
 
     - Dan cara menjalankan test bisa menggunakan perintah `php artisan test` atau `run` langsung menggunakan fitur dari `laravel`.
 
@@ -727,7 +731,7 @@
     // kode berada di directory routes/web
     Route::post('/file/upload', [\App\Http\Controllers\FileController::class, 'upload']);
 
-    //kode berada di directory tests/Feature
+    // kode berada di directory tests/Feature
      public function testUpload()
     {
         $picture = UploadedFile::fake()->image('elaina.png');
@@ -743,4 +747,30 @@
 
 ---
 
-### 24. test
+### 24. Response
+
+-   `Response` digunakan untuk mengembalikan respons dari server ke klien setelah melakukan suatu permintaan. Dalam konteks pengembangan web dengan Laravel, response dapat berupa tampilan `HTML, JSON`, file, atau respons lainnya sesuai dengan kebutuhan aplikasi.
+
+-   Kode response
+
+    ```PHP
+    // kode berada di directory app/Http/Controllers
+    public function response(Request $request): Response
+    {
+        return response("hello response");
+    }
+
+     // kode berada di directory routes
+     Route::get('/response/hello', [\App\Http\Controllers\ResponseController::class, 'response']);
+    ```
+
+-   Unit test
+
+    ```PHP
+     public function response()
+    {
+        $this->get('/response/hello')
+            ->assertStatus(200)
+            ->assertSeeText('hello response');
+    }
+    ```
