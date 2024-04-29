@@ -111,11 +111,10 @@
 
     - Atau kita bisa menambahkan environment variable sendiri ke file `.env`.
 
--   Kode environment test
+-   Kode unit test Environment
 
     ```PHP
-    class EnvironmentTest extends TestCase
-    {
+    //kode berada di directory tests/Feature
         public function testGetEnv()
         {
                 $magang = env('MAGANG');
@@ -129,7 +128,6 @@
 
             self::assertEquals('Gusti', $author);
         }
-    }
     ```
 
 ---
@@ -155,11 +153,10 @@
     ];
     ```
 
--   Code mengambil configurasi
+-   Kode unit test mengambil configurasi
 
     ```PHP
-    class ConfigurationTest extends TestCase
-    {
+    //kode berada di directory tests/Feature
         public function testConfig()
         {
             $firstName = config('contoh.author.first');
@@ -172,7 +169,6 @@
             self::assertEquals('echo.alifiraqsha@gmail.com', $email);
             self::assertEquals('https://github.com/', $web);
         }
-    }
     ```
 
 1. Configuration Cache
@@ -194,8 +190,7 @@
 -   Kode Dependency Injection
 
     ```PHP
-    class DependencyInjectionTest extends TestCase
-    {
+    //kode berada di directory tests/Feature
         public function testDependencyInjection()
         {
             $foo = new Foo();
@@ -203,8 +198,6 @@
 
             self::assertEquals('Foo and Bar', $bar->bar());
         }
-
-    }
     ```
 
 ---
@@ -216,8 +209,7 @@
 -   Kode membuat dependency
 
     ```PHP
-    class ServiceContainerTest extends TestCase
-    {
+    //kode berada di directory tests/Feature
         public function testDependency()
         {
             $foo1 = $this->app->make(Foo::class); //new Foo()
@@ -226,13 +218,13 @@
             self::assertEquals('Foo', $foo1->foo());
             self::assertEquals('Foo', $foo2->foo());
             self::assertNotSame($foo1, $foo2);
-        }
     }
     ```
 
 -   Kode mengubah dependency
 
     ```PHP
+    //kode berada di directory tests/Feature
     public function testBind()
     {
         $this->app->bind(Person::class, function ($app){
@@ -261,9 +253,6 @@
 -   Kode service provider
 
     ```PHP
-    class FooBarServiceProvider extends ServiceProvider implements DeferrableProvider
-    {
-
         public function register()
         {
             // echo "FooBarServiceProvider";
@@ -274,14 +263,12 @@
                 return new Bar($app->make(Foo::class));
             });
         }
-    }
     ```
 
--   Kode test service provider
+-   Kode unit test service provider
 
     ```PHP
-    class FooBarServiceProviderTest extends TestCase
-    {
+    //kode berada di directory tests/Feature
         public function testServiceProvider()
         {
             $foo1 = $this->app->make(Foo::class);
@@ -297,7 +284,6 @@
             self::assertSame($foo1, $bar1->foo);
             self::assertSame($foo2, $bar2->foo);
         }
-    }
     ```
 
 ---
@@ -309,8 +295,7 @@
 -   Kode config facades
 
     ```PHP
-    class Facadetest extends TestCase
-    {
+    //kode berada di directory tests/Feature
         public function testConfig()
         {
             $firstName1 = config('contoh.author.first');
@@ -320,7 +305,6 @@
 
             var_dump(Config::all());
         }
-    }
     ```
 
 ---
@@ -334,6 +318,7 @@
 -   Kode route
 
     ```PHP
+    // kode berada di directory routes/web
     Route::get('/', function () {
     return view('welcome');
     });
@@ -354,6 +339,7 @@
 -   Kode Redirect
 
     ```PHP
+    // kode berada di directory routes/web
     Route::redirect('/instagram','/hofi');
     ```
 
@@ -370,6 +356,7 @@
 -   Kode fallback route
 
     ```PHP
+    // kode berada di directory routes/web
     Route::fallback(function (){
     return "error 404 by HOFi";
     });
@@ -400,6 +387,7 @@
 -   2 Kode untuk menampilkan view
 
     ```PHP
+    // kode berada di directory routes/web
     Route::view('/hello', 'hello', ['name' => 'Gusti']);
 
     Route::get('/hello-again', function (){
@@ -418,6 +406,7 @@
 -   Kode route parameter
 
     ```PHP
+    // kode berada di directory routes/web
     Route::get('/products/{id}', function ($productId){
     return "Product $productId";
     });
@@ -425,11 +414,9 @@
     Route::get('/products/{product}/items/{item}', function ($productId, $itemId){
         return "Product $productId, Item $itemId";
     });
-    ```
 
--   Kode test route parameter
 
-    ```PHP
+    //kode berada di directory tests/Feature
     public function testRouteParameter()
     {
         $this->get('/products/1')
@@ -453,6 +440,7 @@
 -   Kode named route
 
     ```PHP
+    // kode berada di directory routes/web
     Route::get('/categories/{id}', function ($categoryId){
     return "Category $categoryId";
     })->where('id', '[0-9]+')->name('category.detail'); //kode named route
@@ -460,11 +448,9 @@
     Route::get('/users/{id?}', function ($userId = '404'){
         return "User $userId";
     })->name('user.detail'); //kode named route
-    ```
 
--   Kode menggunakan named route
 
-    ```PHP
+    //kode berada di directory tests/Feature
     public function testNamedRoute()
     {
         $this->get('/produk/12345')
@@ -495,21 +481,16 @@
 -   kode route ke controller
 
     ```PHP
+    // kode berada di directory routes/web
     Route::get('/controller/hello', [\App\Http\Controllers\HelloController::class, 'hello']);
 
-    ```
 
--   Kode test controller
-
-    ```PHP
-    class HelloControllerTest extends TestCase
-    {
+    //kode berada di directory tests/Feature
         public function testHello()
         {
             $this->get('/controller/hello/Gusti')
                 ->assertSeeText("Halo Gusti");
         }
-    }
     ```
 
 ---
@@ -531,9 +512,11 @@
     }
     ```
 
--   Kode test request
+-   Kode unit test request
 
     ```PHP
+
+        //kode berada di tests/Feature
      public function testRequest()
     {
         $this->get('/controller/hello/request', [
@@ -552,29 +535,23 @@
 -   Kode mengambil input
 
     ```PHP
-    class InputController extends Controller
-    {
         public function hello(Request $request): string
         {
             $name = $request->input('name');
             return "Hello $name";
         }
-    }
     ```
 
 -   Kode route input
 
     ```PHP
+    // kode berada di directory routes/web
     Route::get('/input/hello', [\App\Http\Controllers\InputController::class, 'hello']);
 
     Route::post('/input/hello', [\App\Http\Controllers\InputController::class, 'hello']);
-    ```
 
--   Kode test rquest input
 
-    ```PHP
-    class InputControllerTest extends TestCase
-    {
+    //kode berada di directory tests/Feature
         public function testInput()
         {
             $this->get('/input/hello?name=Gusti')
@@ -584,9 +561,186 @@
                 'name' => 'Gusti'
             ])->assertSeeText('Hello Gusti');
         }
+    ```
+
+---
+
+### 20. Input Type
+
+-   `Laravel` mempunyai _method_ untuk melakukan konversi tipe data secara otomatis, contohnya melakukan konversi tipe data `Date` dengan menggunakan _method_ `date(key, pattern, timezone)` pada _class_ request.
+
+-   `Laravel` menggunakan _library_ `Carbon` untuk memanipulasi data `Date` dan `Time`.
+
+-   Kode input type
+
+    ```PHP
+    public function inputType(Request $request): string
+    {
+        $name = $request->input('name');
+        $married = $request->boolean('married');
+        $birthDate = $request->date('birth_date', 'Y-m-d');
+
+        return json_encode([
+            'name' => $name,
+            'married' => $married,
+            'birth_date' => $birthDate->format('Y-m-d')
+        ]);
+    }
+    ```
+
+-   Kode unit test input type
+
+    ```PHP
+    // kode berada di directory routes/web
+    Route::post('/input/type', [\App\Http\Controllers\InputController::class, 'inputType']);
+
+
+    //kode berada di directory tests/Feature
+       public function testInputType()
+    {
+        $this->post('/input/type', [
+            'name' => 'Elaina',
+            'married' => 'true',
+            'birth_date' => '2007-07-07'
+        ])->assertSeeText('Elaina')->assertSeeText("true")->assertSeeText("2007-07-07");
     }
     ```
 
 ---
 
-### 20.
+### 21. Filter Request Input
+
+-   Laravel memiliki helper _method_ di _class_ request untuk melakukan `filter input`.
+
+    ```PHP
+    public function filterOnly(Request $request): string
+    {
+        $name = $request->only("name.first", "name.last");
+        return json_encode($name); // digunakan untuk mengambil input yang kita sebutkan parameternya.
+    }
+
+    public function filterExcept(Request $request): string
+    {
+        $user = $request->except("admin");
+        return json_encode($user); // digunakan untuk mengambil semua input, tapi tidak dengan yang disebutkan parameternya.
+    }
+    ```
+
+-   Kode unit test filter request
+
+    ```PHP
+    // kode berada di directory routes/web
+    Route::post('/input/filter/only', [\App\Http\Controllers\InputController::class, 'filterOnly']);
+
+    Route::post('/input/filter/except', [\App\Http\Controllers\InputController::class, 'filterExcept']);
+
+    //kode berada di directory tests/Feature
+      public function testFilterOnly()
+    {
+        $this->post('/input/filter/only', [
+            "name" => [
+                "first" => "Gusti",
+                "middle" => "Alifiraqsha",
+                "last" => "Akbar"
+            ]
+        ])->assertSeeText("Gusti")->assertSeeText("Akbar")
+            ->assertDontSeeText("Alifiraqsha");
+    }
+
+    public function testFilterExcept()
+    {
+        $this->post('/input/filter/except', [
+            "username" => "akbar",
+            "password" => "rahasia",
+            "admin" => "true"
+        ])->assertSeeText("akbar")->assertSeeText("rahasia")
+            ->assertDontSeeText("admin");
+    }
+    ```
+
+---
+
+### 22. File Storage
+
+-   `Laravel` mendukung _abstraction_ untuk management `file storage` menggunakan _library_ `Flysystem`.
+
+-   Konfigurasi `file storage` terdapat di directory `config/filestytem.php`.
+
+-   Kode konfigurasi file storage
+
+    ```PHP
+    'disks' => [
+
+        'local' => [
+            'driver' => 'local',
+            'root' => storage_path('app'),
+            'throw' => false,
+        ],
+
+        'public' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+    ]
+    ```
+
+-   Kode file storage
+
+    ```PHP
+     public function testStorage()
+    {
+        $filesystem = Storage::disk("local");
+
+        $filesystem->put("file.txt", "Gusti Alifiraqsha Akbar");
+
+        $content = $filesystem->get("file.txt");
+
+        self::assertEquals("Gusti Alifiraqsha Akbar", $content);
+    }
+    ```
+
+---
+
+### 23. File Upload
+
+-   `Laravel` juga menyediakan _method_ `file(key)` di request untuk mengambil request file upload.
+
+-   Kode file upload
+
+    ```PHP
+     public function upload(Request $request): string
+    {
+        $picture = $request->file('picture');
+
+        $picture->storePubliclyAs("pictures", $picture->getClientOriginalName(), "public");
+
+        return "OK " . $picture->getClientOriginalName();
+    }
+    ```
+
+-   Kode unit test file upload
+
+    ```PHP
+    // kode berada di directory routes/web
+    Route::post('/file/upload', [\App\Http\Controllers\FileController::class, 'upload']);
+
+    //kode berada di directory tests/Feature
+     public function testUpload()
+    {
+        $picture = UploadedFile::fake()->image('elaina.png');
+
+        $this->post('/file/upload', [
+            'picture' => $picture
+        ])->assertSeeText("OK .png");
+    }
+    ```
+
+-   Dan secara otomatis kita bisa mengaksesnya di URL
+    ![alt text](img/memo.png)
+
+---
+
+### 24. test
